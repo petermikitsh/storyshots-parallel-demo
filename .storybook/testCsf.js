@@ -19,7 +19,7 @@ const asyncNoop = () => Promise.resolve(undefined);
 
 export function testCsf(
   { default: defaultExport, ...otherExports },
-  firstFileNameSegment
+  storyMeta
 ) {
   if (!defaultExport) {
     throw new Error("Story file not in CSF, please fix!");
@@ -84,23 +84,16 @@ export function testCsf(
           ...global.imageSnapshotOpts,
         };
 
-        const finalStoryKind = sanitize(
-          paramCase(defaultExport.title || firstFileNameSegment)
-        );
-
-        const finalStoryName = sanitize(
-          paramCase(exported.story?.name || exported.storyName || exportName)
-        );
-
-        const finalStoryID = `${finalStoryKind}--${finalStoryName}`;
+        const { id } = storyMeta[exportName];
+        const [kind, story] = id.split("--");
 
         const options = {
           context: {
-            kind: finalStoryKind,
-            story: finalStoryName,
+            kind,
+            story,
             parameters: {},
           },
-          url: `${config.storybookUrl}iframe.html?id=${finalStoryID}`,
+          url: `${config.storybookUrl}iframe.html?id=${id}`,
         };
 
         const browser = await config.getCustomBrowser();
