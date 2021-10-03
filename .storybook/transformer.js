@@ -12,7 +12,7 @@ module.exports = {
       ? `
 ${src}
 if (!require.main) {
-  require('${__dirname}/testCsf').testCsf(module.exports, ${firstFileNameSegment});
+  require('${__dirname}/testCsf').testCsf(module.exports, "${firstFileNameSegment}");
 }`
       : src;
 
