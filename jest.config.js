@@ -1,5 +1,6 @@
 /** @type {import('@jest/types').Config.InitialOptions} */
 const config = {
+  setupFilesAfterEnv: ["<rootDir>/test/jest.setup.js"],
   moduleNameMapper: {},
   transform: {
     "\\.(css)$": "<rootDir>/test/styleMock.js",
