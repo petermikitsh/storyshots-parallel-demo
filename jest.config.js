@@ -9,6 +9,7 @@ const config = {
   },
   testMatch: ["**/?(*.)+(spec|test|stories).[jt]s?(x)"],
   testPathIgnorePatterns: ["/node_modules/"],
+  testTimeout: 5 * 60 * 1000,
 };
 
 module.exports = config;
