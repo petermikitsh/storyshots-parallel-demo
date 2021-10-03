@@ -21,7 +21,7 @@ BROWSERLESS_PORT=$(npx --no-install get-port)
 DOCKER_BROWSERLESS_CONTAINER_ID=$(docker run -d --rm \
   -p $BROWSERLESS_PORT:3000 \
   -e "CONNECTION_TIMEOUT=-1" \
-  -e "MAX_CONCURRENT_SESSIONS=3" \
+  -e "MAX_CONCURRENT_SESSIONS=25" \
   browserless/chrome:1.48.0-chrome-stable
 )
 
