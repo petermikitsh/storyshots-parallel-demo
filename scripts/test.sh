@@ -31,7 +31,7 @@ DOCKER_BROWSERLESS_CONTAINER_ID=$(docker run -d --rm \
 
 # Run test
 BROWSERLESS_PORT=$BROWSERLESS_PORT STORYBOOK_PORT=$STORYBOOK_PORT \
-  npx --no-install jest 'stories/.*stories' --no-cache --maxWorkers=$HALF_CORES
+  npx --no-install jest 'stories/.*stories' --maxWorkers=$HALF_CORES
 
 JEST_EXIT_CODE=$?
 
