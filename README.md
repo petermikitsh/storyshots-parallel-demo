@@ -20,6 +20,13 @@ yarn test
 
 As shown below, **Strategy B1** had the highest performance (paid cloud provider).
 
+| Strategy | Description               | Time         | Max Parallel Tasks | Cloud Costs | Notes                                                           |
+| -------- | ------------------------- | ------------ | ------------------ | ----------- | --------------------------------------------------------------- |
+| A        | Local docker              | 239.641 s    | 8                  | None        | Occasional socket hang up errors                                |
+| B        | Free cloud services       | 279.229 s    | 8                  | None        | Limited to max 10 concurrent sessions                           |
+| B1       | Paid cloud services       | **85.873 s** | 32                 | $0.33       | Max parallel tasks could safely increase for add'l time savings |
+| C        | Local docker, no CSF Code | 232.319 s    | 8                  | None        | Marginal performance increase                                   |
+
 ### Strategy A: Results (Generating baseline from scratch)
 
 > To repeat Strategy A, check out commit: https://github.com/petermikitsh/storyshots-parallel-demo/commit/ed54dc3a2f3b5dd45ac9f74e09255573622473e6
@@ -38,7 +45,7 @@ Time:        239.641 s, estimated 251 s
 
 ### Strategy B: Results (No Docker / cloud services only)
 
-🎉 I COULD NOT HEAR MY COMPUTER FANS WITH THIS STRATEGY (the emphasis was necessary) 🎉
+My fans were not noisy with this strategy!
 
 > To repeat Strategy B:
 >
