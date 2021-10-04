@@ -2126,7 +2126,7 @@
     "@storybook/core-client" "6.3.9"
     "@storybook/core-server" "6.3.9"
 
-"@storybook/csf-tools@6.3.9":
+"@storybook/csf-tools@6.3.9", "@storybook/csf-tools@^6.3.9":
   version "6.3.9"
   resolved "https://registry.yarnpkg.com/@storybook/csf-tools/-/csf-tools-6.3.9.tgz#3f47725bf4108fd08a2350c39cf4eb5755d96c12"
   integrity sha512-rgAcq/3x8HEIRJdEqw21YT6zDdvEoCUZOMS2XYISJstFZp3weK+PbQr5tsMefAoVjpsNCi9ypYSXMT6dxnNbPw==
