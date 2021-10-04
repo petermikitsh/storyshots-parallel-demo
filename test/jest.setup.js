@@ -1,4 +1,7 @@
 import puppeteer from "puppeteer";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 /** @type {import('@storybook/addon-storyshots-puppeteer').ImageSnapshotConfig } */
 global.imageSnapshotOpts = {
@@ -6,7 +9,9 @@ global.imageSnapshotOpts = {
     // console.log("Connecting to Browserless puppeteer...");
 
     const instance = puppeteer.connect({
-      browserURL: `http://localhost:${process.env.BROWSERLESS_PORT}`,
+      // browserURL: `http://localhost:${process.env.BROWSERLESS_PORT}`,
+      // instead of local puppeteer, use the cloud!
+      browserWSEndpoint: `wss://chrome.browserless.io?token=${process.env.BROWSERLESS_TOKEN}`,
     });
 
     // instance.then(() => {
@@ -18,5 +23,8 @@ global.imageSnapshotOpts = {
   beforeScreenshot: (page, { context, url }) => {
     // console.log("url is", url);
   },
-  storybookUrl: `http://host.docker.internal:${process.env.STORYBOOK_PORT}/`,
+
+  // storybookUrl: `http://host.docker.internal:${process.env.STORYBOOK_PORT}/`,
+  // instead of local storybook, use the cloud!
+  storybookUrl: `https://petermikitsh.github.io/storyshots-parallel-demo/`,
 };
