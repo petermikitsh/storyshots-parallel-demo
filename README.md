@@ -1,5 +1,7 @@
 # storyshots-parallel-demo
 
+Companion repo: https://github.com/petermikitsh/storyshots-sequential-demo
+
 Run storyshots in parallel (as opposed to sequentially).
 
 Requires `yarn`, and `nvm` is recommended.
