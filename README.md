@@ -20,12 +20,12 @@ yarn test
 
 As shown below, **Strategy B1** had the highest performance (paid cloud provider).
 
-| Strategy | Description               | Time    | Max Parallel Tasks | Cloud Costs | Notes                                                           |
-| -------- | ------------------------- | ------- | ------------------ | ----------- | --------------------------------------------------------------- |
-| A        | Local docker              | 239s    | 8                  | None        | Occasional socket hang up errors                                |
-| B        | Free cloud services       | 279s    | 8                  | None        | Limited to max 10 concurrent sessions                           |
-| B1       | Paid cloud services       | **85s** | 32                 | $0.33       | Max parallel tasks could safely increase for add'l time savings |
-| C        | Local docker, no CSF Code | 23s     | 8                  | None        | Marginal performance increase                                   |
+| Strategy | Description               | Time        | Max Parallel Tasks | Cloud Costs | Notes                                                           |
+| -------- | ------------------------- | ----------- | ------------------ | ----------- | --------------------------------------------------------------- |
+| A        | Local docker              | 239s        | 8                  | None        | Occasional socket hang up errors                                |
+| B        | Free cloud services       | 279s        | 8                  | None        | Limited to max 10 concurrent sessions                           |
+| B1 ⚡️   | Paid cloud services       | **85s** ⚡️ | 32                 | $0.33       | Max parallel tasks could safely increase for add'l time savings |
+| C        | Local docker, no CSF Code | 23s         | 8                  | None        | Marginal performance increase                                   |
 
 ### Strategy A: Results (Generating baseline from scratch)
 
