@@ -1,13 +1,50 @@
 import "./preview";
 import { toMatchImageSnapshot } from "jest-image-snapshot";
 import puppeteer from "puppeteer";
+import { sanitize } from "@storybook/csf";
+import { paramCase } from "change-case";
 
 expect.extend({ toMatchImageSnapshot });
+
+function matches(storyKey, arrayOrRegex) {
+  if (Array.isArray(arrayOrRegex)) {
+    return arrayOrRegex.includes(storyKey);
+  }
+
+  return storyKey.match(arrayOrRegex);
+}
 
 const noop = () => undefined;
 const asyncNoop = () => Promise.resolve(undefined);
 
-export function testCsf(storyMeta) {
+export function testCsf(
+  { default: defaultExport, ...otherExports },
+  storyMeta
+) {
+  if (!defaultExport) {
+    throw new Error("Story file not in CSF, please fix!");
+  }
+
+  const {
+    args: componentArgs,
+    decorators: componentDecorators = [],
+    excludeStories = [],
+    includeStories,
+  } = defaultExport;
+
+  let storyEntries = Object.entries(otherExports);
+  if (includeStories) {
+    storyEntries = storyEntries.filter(([storyKey]) =>
+      matches(storyKey, includeStories)
+    );
+  }
+
+  if (excludeStories) {
+    storyEntries = storyEntries.filter(
+      ([storyKey]) => !matches(storyKey, excludeStories)
+    );
+  }
+
   /** @type {import('@storybook/addon-storyshots-puppeteer').ImageSnapshotConfig } */
   const config = {
     storybookUrl: "http://localhost:6006",
@@ -56,30 +93,39 @@ export function testCsf(storyMeta) {
         await browser.close();
       });
 
-      Object.values(storyMeta).forEach(({ id, name: ExportName }) => {
-        const [, story] = id.split("--");
+      storyEntries
+        .filter(
+          ([exportName]) =>
+            !(Array.isArray(excludeStories)
+              ? excludeStories.includes(exportName)
+              : exportName.matches(excludeStories))
+        )
+        .forEach(([exportName, exported]) => {
+          const name = exported.story?.name || exported.storyName || exportName;
+          it(name, async () => {
+            expect.hasAssertions();
 
-        it(ExportName, async () => {
-          expect.hasAssertions();
+            const { id } = storyMeta[exportName];
+            const [, story] = id.split("--");
 
-          const options = {
-            context: {
-              kind,
-              story,
-              parameters: {},
-            },
-            url: `${config.storybookUrl}iframe.html?id=${id}`,
-          };
+            const options = {
+              context: {
+                kind,
+                story,
+                parameters: {},
+              },
+              url: `${config.storybookUrl}iframe.html?id=${id}`,
+            };
 
-          await page.goto(options.url, config.getGotoOptions(options));
-          const element = await config.beforeScreenshot(page, options);
-          const image = await (element || page).screenshot(
-            config.getScreenshotOptions(options)
-          );
-          await config.afterScreenshot({ image, context: options.context });
-          expect(image).toMatchImageSnapshot(config.getMatchOptions(options));
+            await page.goto(options.url, config.getGotoOptions(options));
+            const element = await config.beforeScreenshot(page, options);
+            const image = await (element || page).screenshot(
+              config.getScreenshotOptions(options)
+            );
+            await config.afterScreenshot({ image, context: options.context });
+            expect(image).toMatchImageSnapshot(config.getMatchOptions(options));
+          });
         });
-      });
     });
   });
 }

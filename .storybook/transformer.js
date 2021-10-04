@@ -11,9 +11,13 @@ module.exports = {
       breakLength: Infinity,
     });
 
-    const runTestCode = filename.indexOf("stories.") > -1;
-    const resolvedSrc = runTestCode
-      ? `require('${__dirname}/testCsf').testCsf(${storyMetaSerialized});`
+    const addTestCode = filename.indexOf("stories.") > -1;
+    const resolvedSrc = addTestCode
+      ? `
+${src}
+if (!require.main) {
+  require('${__dirname}/testCsf').testCsf(module.exports, ${storyMetaSerialized});
+}`
       : src;
 
     const result = transform(resolvedSrc, {
