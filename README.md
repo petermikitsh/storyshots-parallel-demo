@@ -55,7 +55,7 @@ My fans were not noisy with this strategy!
 Instead of spinning up Chrome and a static file server in locally running docker containers, use cloud services for both.
 
 - Use browserless.io for Chrome/Puppeteer
-- Use GitHub CDN for hosting built Storybook project
+- Use GitHub CDN for hosting [built Storybook project](https://petermikitsh.github.io/storyshots-parallel-demo/)
 
 #### B: Generating baseline from scratch
 
